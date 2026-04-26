@@ -37,7 +37,7 @@ export const en: Translations = {
     ],
   },
   promova: {
-    title: 'PROМОВА PARTNERSHIP',
+    title: 'PROМОВА',
     subtitle: 'Dubbing & Voiceover Courses and Intensives',
     text: '20k Productions studio, in partnership with PROМОВА channel, regularly conducts dubbing and voiceover courses and intensives. Develop your skills with the best professionals in the voiceover industry.',
     cta: 'Watch Channel',
