@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Services from '../components/Services.astro';
+import Promova from '../components/Promova.astro';
+import Studio from '../components/Studio.astro';
+import { ua } from '../i18n/ua';
+---
+
+<Layout t={ua}>
+  <Hero t={ua} />
+  <About t={ua} />
+  <Services t={ua} />
+  <Promova t={ua} />
+  <Studio t={ua} />
+</Layout>

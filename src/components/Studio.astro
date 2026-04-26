@@ -1,0 +1,128 @@
+---
+import type { Translations } from '../i18n/types';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  t: Translations;
+}
+
+const { t } = Astro.props;
+const images = Object.values(
+  import.meta.glob<{ default: ImageMetadata }>('../assets/images/slider/*.{jpeg,jpg}', { eager: true })
+).map(m => m.default);
+---
+
+<section id="studio" class="relative py-28 lg:py-36 bg-zinc-950 overflow-hidden">
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent"></div>
+
+  <!-- Header inside container -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <p class="text-gold-400 text-[10px] tracking-[0.5em] uppercase font-heading mb-3">20K</p>
+      <h2 class="font-heading font-black text-4xl sm:text-5xl text-white tracking-tight">
+        {t.studio.title}
+      </h2>
+      <div class="mt-4 mx-auto h-px w-16 bg-gold-400"></div>
+    </div>
+  </div>
+
+  <!-- Swiper — full viewport width so peek slides are visible -->
+  <div class="swiper studio-swiper w-full">
+    <div class="swiper-wrapper">
+      {images.map((img, i) => (
+        <div class="swiper-slide !w-3/5 aspect-video rounded-2xl overflow-hidden opacity-50 transition-opacity duration-[400ms]">
+          <Image
+            src={img}
+            alt={`Studio ${i + 1}`}
+            class="w-full h-full object-cover block"
+            widths={[800, 1200, 1600]}
+            sizes="73vw"
+          />
+        </div>
+      ))}
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev !w-10 !h-10 !rounded-full !bg-black/50 !text-gold-400 backdrop-blur-sm"></div>
+    <div class="swiper-button-next !w-10 !h-10 !rounded-full !bg-black/50 !text-gold-400 backdrop-blur-sm"></div>
+  </div>
+
+  <!-- YouTube link inside container -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mt-10 text-center">
+      <a
+        href="https://www.youtube.com/@20kprod"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-3 text-xs font-heading font-bold tracking-widest uppercase text-zinc-400 hover:text-gold-400 transition-colors group"
+      >
+        {t.studio.cta}
+        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .studio-swiper .swiper-slide-active {
+    opacity: 1;
+  }
+
+  .studio-swiper .swiper-button-prev::after,
+  .studio-swiper .swiper-button-next::after {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .studio-swiper .swiper-pagination {
+    bottom: -28px;
+  }
+  .studio-swiper .swiper-pagination-bullet {
+    background: #ffffff;
+    opacity: 0.4;
+  }
+  .studio-swiper .swiper-pagination-bullet-active {
+    background: #D4A847;
+    opacity: 1;
+  }
+</style>
+
+<script>
+  import Swiper from 'swiper'
+  import { Navigation, Pagination, Autoplay, Keyboard } from 'swiper/modules'
+  import 'swiper/css'
+  import 'swiper/css/navigation'
+  import 'swiper/css/pagination'
+
+  const el = document.querySelector('.studio-swiper');
+
+  if (el) {
+    new Swiper('.studio-swiper', {
+      modules: [Navigation, Pagination, Autoplay, Keyboard],
+      slidesPerView: 'auto',
+      centeredSlides: true,
+      spaceBetween: 20,
+      loop: true,
+      autoplay: {
+        delay: 1700,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+      },
+      navigation: {
+        prevEl: '.studio-swiper .swiper-button-prev',
+        nextEl: '.studio-swiper .swiper-button-next',
+      },
+      pagination: {
+        el: '.studio-swiper .swiper-pagination',
+        clickable: true,
+      },
+      keyboard: {
+        enabled: true,
+        onlyInViewport: true,
+      },
+      speed: 600,
+    })
+  }
+</script>
