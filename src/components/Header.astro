@@ -15,7 +15,7 @@ const homeHref = t.lang === 'ua' ? '/' : '/en/';
 
       <!-- Logo -->
       <a href={homeHref} class="flex items-center opacity-90 hover:opacity-100 transition-opacity">
-        <img src="/logo-20k.svg" alt="20K Productions" class="h-10 w-auto" />
+        <img src="/logo-20k.svg" alt="20K Productions" class="h-7 lg:h-8 w-auto" />
       </a>
 
       <!-- Desktop nav -->
@@ -46,7 +46,7 @@ const homeHref = t.lang === 'ua' ? '/' : '/en/';
   </div>
 
   <!-- Mobile nav -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-zinc-800/60 bg-zinc-950/75 backdrop-blur-sm">
+  <div id="mobile-menu" class="md:hidden">
     <nav class="max-w-7xl mx-auto px-4 py-5 flex flex-col gap-4">
       <a href="#about"    class="m-nav-link text-xs font-medium text-zinc-200 hover:text-gold-400 transition-colors tracking-widest uppercase py-1">{t.nav.about}</a>
       <a href="#services" class="m-nav-link text-xs font-medium text-zinc-200 hover:text-gold-400 transition-colors tracking-widest uppercase py-1">{t.nav.services}</a>
@@ -65,17 +65,30 @@ const homeHref = t.lang === 'ua' ? '/' : '/en/';
   const iconClose = document.getElementById('icon-close')!;
 
   menuBtn.addEventListener('click', () => {
-    const isOpen = !menu.classList.contains('hidden');
-    menu.classList.toggle('hidden', isOpen);
+    const isOpen = menu.classList.contains('open');
+    menu.classList.toggle('open', !isOpen);
     iconOpen.classList.toggle('hidden', !isOpen);
     iconClose.classList.toggle('hidden', isOpen);
   });
 
   document.querySelectorAll('.m-nav-link').forEach(link => {
     link.addEventListener('click', () => {
-      menu.classList.add('hidden');
+      menu.classList.remove('open');
       iconOpen.classList.remove('hidden');
       iconClose.classList.add('hidden');
     });
   });
 </script>
+
+<style>
+  #mobile-menu {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.4s ease-in-out, opacity 0.2s ease-in-out;
+  }
+  #mobile-menu.open {
+    max-height: 320px;
+    opacity: 1;
+  }
+</style>
